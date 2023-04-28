@@ -1,6 +1,4 @@
-﻿using OpenQA.Selenium;
-using SpecFlowTests.Configuration;
-using SpecFlowTests.Drivers;
+﻿using BDD.Interfaces;
 
 namespace SpecFlowTests.Pages;
 
@@ -11,13 +9,12 @@ public class MainPage : PageBase
     protected const string AddId = "Add";
     protected const string TaskListId = "TaskList";
 
-    public MainPage(DriverProvider driverProvider, ConfigProvider configProvider) : base(driverProvider, configProvider) { }
+    public MainPage(IDriverProvider driverProvider) : base(driverProvider) { }
 
-    public override bool Displayed => Logo.Displayed;
+    public override bool Displayed => Logo!.Displayed;
 
-    public IWebElement Logo => FindElementById(LogoId);
-    public IWebElement EnterTask => FindElementById(EnterTaskId);
-    public IWebElement Add => FindElementById(AddId);
-    public IWebElement TaskList => FindElementById(TaskListId);
-    public IWebElement TaskListItem => FindChildElementByClassName(TaskList, ("android.widget.TextView"));
+    public IPageElement Logo => Driver!.FindElementById(LogoId);
+    public IPageElement EnterTask => Driver!.FindElementById(EnterTaskId);
+    public IPageElement Add => Driver!.FindElementById(AddId);
+    public IPageElement TaskList => Driver!.FindElementById(TaskListId);
 }
