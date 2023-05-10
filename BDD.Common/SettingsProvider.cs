@@ -16,12 +16,14 @@ public class SettingsProvider : ISettingsProvider
             .Build();
 
         FrameworkSettings = new AppSettings(configurationBuilder.GetRequiredSection(nameof(FrameworkSettings)).GetChildren().ToDictionary(x => x.Key, y => y.Value!));
-        GeneralSettings = new AppSettings(configurationBuilder.GetRequiredSection(nameof(GeneralSettings)).GetChildren().ToDictionary(x => x.Key, y => y.Value!));
+        AndroidSettings = new AppSettings(configurationBuilder.GetRequiredSection(nameof(AndroidSettings)).GetChildren().ToDictionary(x => x.Key, y => y.Value!));
+        IosSettings = new AppSettings(configurationBuilder.GetRequiredSection(nameof(IosSettings)).GetChildren().ToDictionary(x => x.Key, y => y.Value!));
     }
 
     public AppSettings FrameworkSettings { get; }
-
-    public AppSettings GeneralSettings { get; }
+    public AppSettings AndroidSettings { get; }
+    public AppSettings IosSettings { get; }
 
     public bool IsAndroid => FrameworkSettings["platformName"] == "Android";
+    public bool IsIos => FrameworkSettings["platformName"] == "iOS";
 }
