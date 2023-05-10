@@ -2,8 +2,8 @@
 
 public interface ISettingsProvider
 {
-    public IDictionary<string, string> FrameworkSettings { get; }
-    public IDictionary<string, string> GeneralSettings { get; }
+    public AppSettings FrameworkSettings { get; }
+    public AppSettings GeneralSettings { get; }
 
     public bool IsAndroid { get; }
 }
