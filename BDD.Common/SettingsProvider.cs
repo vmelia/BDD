@@ -24,6 +24,6 @@ public class SettingsProvider : ISettingsProvider
     public AppSettings AndroidSettings { get; }
     public AppSettings IosSettings { get; }
 
-    public bool IsAndroid => FrameworkSettings["platformName"] == "Android";
-    public bool IsIos => FrameworkSettings["platformName"] == "iOS";
+    public bool IsAndroid => FrameworkSettings["PlatformName"] == "Android";
+    public bool IsIos => FrameworkSettings["PlatformName"] == "iOS";
 }

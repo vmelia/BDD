@@ -16,21 +16,26 @@ public class AppiumFrameworkDriver : IDriver
     public AppiumFrameworkDriver(ISettingsProvider settingsProvider)
     {
         _settingsProvider = settingsProvider;
-        _ = int.TryParse(settingsProvider.FrameworkSettings["connectionTimeOutInSeconds"], out var connectionTimeOutInSeconds);
+        _ = int.TryParse(settingsProvider.FrameworkSettings["ConnectionTimeOutInSeconds"], out var connectionTimeOutInSeconds);
 
         var appiumOptions = new AppiumOptions();
+        appiumOptions.AddAdditionalCapability(MobileCapabilityType.PlatformName, settingsProvider.FrameworkSettings["PlatformName"]);
+
         if (settingsProvider.IsAndroid)
         {
-            appiumOptions.AddAdditionalCapability(MobileCapabilityType.PlatformName, settingsProvider.FrameworkSettings["platformName"]);
-
-            appiumOptions.AddAdditionalCapability(MobileCapabilityType.AutomationName, settingsProvider.AndroidSettings["automationName"]);
-            appiumOptions.AddAdditionalCapability(MobileCapabilityType.App, settingsProvider.AndroidSettings["app"]);
-            appiumOptions.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, settingsProvider.AndroidSettings["platformVersion"]);
+            appiumOptions.AddAdditionalCapability(MobileCapabilityType.AutomationName, settingsProvider.AndroidSettings["AutomationName"]);
+            appiumOptions.AddAdditionalCapability(MobileCapabilityType.App, settingsProvider.AndroidSettings["App"]);
+            appiumOptions.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, settingsProvider.AndroidSettings["PlatformVersion"]);
 
             _driver = new AndroidDriver<IWebElement>(appiumOptions, TimeSpan.FromSeconds(connectionTimeOutInSeconds));
         }
         else if (settingsProvider.IsIos)
         {
+            appiumOptions.AddAdditionalCapability(MobileCapabilityType.AutomationName, settingsProvider.IosSettings["AutomationName"]);
+            appiumOptions.AddAdditionalCapability(MobileCapabilityType.App, settingsProvider.IosSettings["App"]);
+            appiumOptions.AddAdditionalCapability(MobileCapabilityType.PlatformVersion, settingsProvider.IosSettings["PlatformVersion"]);
+            appiumOptions.AddAdditionalCapability(MobileCapabilityType.DeviceName, settingsProvider.IosSettings["DeviceName"]);
+
             _driver = new IOSDriver<IWebElement>(appiumOptions, TimeSpan.FromSeconds(connectionTimeOutInSeconds));
         }
         else
