@@ -12,6 +12,8 @@ public class AppiumFrameworkElement : IPageElement
         _webElement = webElement;
     }
 
+    public string Text => _webElement.Text;
+
     public bool Displayed => _webElement.Displayed;
 
     public bool Enabled => _webElement.Enabled;

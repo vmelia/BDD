@@ -2,6 +2,8 @@
 
 public interface IPageElement
 {
+    string Text { get; }
+
     bool Displayed { get; }
     bool Enabled { get; }
 

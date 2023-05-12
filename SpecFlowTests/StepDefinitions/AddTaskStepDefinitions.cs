@@ -1,4 +1,5 @@
 using SpecFlowTests.Pages;
+using System.Threading.Tasks;
 
 namespace SpecFlowTests.StepDefinitions;
 
@@ -44,8 +45,15 @@ public class AddTaskStepDefinitions
     }
 
     [Then(@"the list should show (.*)")]
-    public static void ThenTheListShouldShow(string _)
+    public void ThenTheListShouldShow(string text)
     {
+        Console.WriteLine("******** Tasks");
+        foreach (var task in _page.TaskList)
+        {
+            Console.WriteLine(task.Text);
+        }
+        Console.WriteLine("********");
 
+        _page.TaskList.Should().Contain(x => x.Text == text);
     }
 }

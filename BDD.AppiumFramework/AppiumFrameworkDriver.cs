@@ -59,4 +59,11 @@ public class AppiumFrameworkDriver : IDriver
 
         throw new InvalidOperationException("Invalid platform");
     }
+
+    public ICollection<IPageElement> FindElements(string className)
+    {
+        var webElements = _driver.FindElements(By.ClassName(className));
+
+        return webElements.Select(webElement => new AppiumFrameworkElement(webElement)).Cast<IPageElement>().ToList();
+    }
 }
