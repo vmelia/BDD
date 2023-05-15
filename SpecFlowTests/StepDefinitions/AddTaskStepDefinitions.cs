@@ -1,59 +1,55 @@
 using SpecFlowTests.Pages;
-using System.Threading.Tasks;
 
 namespace SpecFlowTests.StepDefinitions;
 
 [Binding]
 public class AddTaskStepDefinitions
 {
-    private readonly MainPage _page;
+    private readonly MainPage _mainPage;
 
-    public AddTaskStepDefinitions(MainPage page)
+    public AddTaskStepDefinitions(PageFactory pageFactory)
     {
-        _page = page;
+        _mainPage = (MainPage)pageFactory.CreatePage(nameof(MainPage));
     }
 
     [Given(@"I am on the main page")]
     public void GivenIAmOnTheMainPage()
     {
-        _page.Displayed.Should().BeTrue();
+        _mainPage.Displayed.Should().BeTrue();
     }
 
     [Given(@"I enter a task name containing just spaces")]
     public void GivenIEnterATaskNameContainingJustSpaces()
     {
-        _page.EnterTask.SendKeys("    ");
+        _mainPage.EnterTask.SendKeys("    ");
     }
 
     [Given(@"I enter a task named (.*)")]
     public void GivenIEnterATaskNamed(string taskName)
     {
-        _page.EnterTask.SendKeys(taskName);
+        _mainPage.EnterTask.SendKeys(taskName);
     }
 
     [Then(@"Add should be (.*)")]
     public void AddShouldBe(string enabledOrDisabled)
     {
         var enabled = enabledOrDisabled == "enabled";
-        _page.Add.Enabled.Should().Be(enabled);
+        _mainPage.Add.Enabled.Should().Be(enabled);
     }
 
     [Given(@"I choose add")]
     public void GivenIChooseAdd()
     {
-        _page.Add.Click();
+        _mainPage.Add.Click();
     }
 
     [Then(@"the list should show (.*)")]
     public void ThenTheListShouldShow(string text)
     {
-        Console.WriteLine("******** Tasks");
-        foreach (var task in _page.TaskList)
+        foreach (var t in _mainPage.TaskList)
         {
-            Console.WriteLine(task.Text);
+            Console.WriteLine(t.Text);
         }
-        Console.WriteLine("********");
-
-        _page.TaskList.Should().Contain(x => x.Text == text);
+        _mainPage.TaskList.Should().Contain(x => x.Text == text);
     }
 }

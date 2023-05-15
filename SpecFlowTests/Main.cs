@@ -20,5 +20,6 @@ public class Main
     {
         _objectContainer.RegisterTypeAs<SettingsProvider, ISettingsProvider>();
         _objectContainer.RegisterTypeAs<AppiumDriverProvider, IDriverProvider>();
+        _objectContainer.RegisterTypeAs<PageFactory, PageFactory>();
     }
 }
